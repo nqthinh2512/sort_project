@@ -7,7 +7,7 @@
 using namespace std;
 
 
-void GenerateRandomData(int a[], int n);
+void GenerateData(int a[], int n, int dataType);
 
 sortFunction select_sort_func(char* sort_name);
 
@@ -19,4 +19,10 @@ void output_param(char* param, char* sort_name, sortFunction sort_func, int n, i
 
 void do_command_1(int n, char* requirements[]);
 
-void getCommandLine(int argc, char* argv[]);
+void do_command_2(int n, char* requirements[]);
+
+void do_command_3(int n, char* requirements[]);
+
+void do_command_4(int n, char* requirements[]);
+
+void do_command_5(int n, char* requirements[]);

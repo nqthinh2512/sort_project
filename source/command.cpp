@@ -95,7 +95,7 @@ void output_param(char* param, char* sort_name, sortFunction sort_func, int n, i
 {
 	if (string(param) == "-time")
 	{
-		cout << "Running time: " << count_runtime(sort_func, arr, n);
+		cout << "Running time: " << count_runtime(sort_func, arr, n) << endl;
 	}
 	else if (string(param) == "-comp")
 	{
@@ -117,7 +117,7 @@ void output_param(char* param, char* sort_name, sortFunction sort_func, int n, i
 
 void do_command_1(int n, char* requirements[])
 {
-	ifstream fin(requirements[3], ios::in);
+	ifstream fin(requirements[3], ios::out);
 	if (!fin.is_open()) {
 		cout << "Error: Cannot open file " << requirements[3] << endl;
 		return;
@@ -146,9 +146,61 @@ void do_command_1(int n, char* requirements[])
 	delete[]arr;
 }
 
+void call_generated_func(char* input_order, int m, int arr[])
+{
+	if (string(input_order) == "-rand")
+		GenerateData(arr, m, 0);
+	else if (string(input_order) == "-sorted")
+		GenerateData(arr, m, 1);
+	else if (string(input_order) == "-rev")
+		GenerateData(arr, m, 2);
+	else if (string(input_order) == "-nsorted")
+		GenerateData(arr, m, 3);
+	else {
+		cout << "Error: Cannot find the input order!" << endl;
+		return;
+	}
+}
+
 void do_command_2(int n, char* requirements[])
 {
+	cout << "ALGORITHM MODE" << endl;
+	print_sorting_algorithm(requirements[2]);
+	cout << "Input size: " << requirements[3] << endl;
+	cout << "Input order: " << requirements[4] << endl;
+	
+	for (int i = 0; i < 5; i++)
+		cout << "-----";
+	cout << endl;
 
+	int m = stoi(requirements[3]);
+	int* arr = new int[m];
+	call_generated_func(requirements[4], m, arr);
+	
+	ofstream fout_input("input.txt", ios::out);
+	if (!fout_input.is_open())
+	{
+		cout << "Error: Cannot open input.txt" << endl;
+		return;
+	}
+	fout_input << m << endl;
+	for (int i = 0; i < m; i++)
+	{
+		fout_input << arr[i] << " ";
+	}
+	fout_input.close();
+
+	output_param(requirements[5], requirements[2], select_sort_func(requirements[2]), m, arr);
+	
+	ofstream fout_output("output.txt", ios::in);
+	for (int i = 0; i < m; i++)
+	{
+		fout_output << arr[i] << " ";
+	}
+	fout_output << endl;
+	fout_output.close();
+
+	delete[]arr;
 }
 
 void do_command_3(int n, char* requirements[])
@@ -166,41 +218,3 @@ void do_command_5(int n, char* requirements[])
 
 }
 
-void getCommandLine(int argc, char* argv[])
-{
-	if (argc == 5)
-	{
-		if (string(argv[1]) == "-c")
-		{
-			do_command_4(argc, argv);
-		}
-		else if (string(argv[1]) == "-a")
-		{
-			char* temp = argv[3];
-
-			while (*temp != '\0' && *temp != '.')
-			{
-				temp += 1;
-			}
-			if (*temp == '.')
-			{
-				do_command_1(argc, argv);
-			}
-			else
-			{
-				do_command_3(argc, argv);
-			}
-		}
-	}
-	else if (argc == 6)
-	{
-		if (string(argv[1]) == "-a")
-		{
-			do_command_2(argc, argv);
-		}
-		else if (string(argv[1]) == "-c")
-		{
-			do_command_5(argc, argv);
-		}
-	}
-}

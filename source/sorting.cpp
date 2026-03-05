@@ -106,7 +106,7 @@ void quickSort(int arr[], int first, int last)
 
 void quickSort(int arr[], int n)
 {
-
+    quickSort(arr, 0, n - 1);
 }
 
 // ------------------------------------------------

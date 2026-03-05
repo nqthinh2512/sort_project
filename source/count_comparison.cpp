@@ -138,19 +138,19 @@ void heapify_count_cmp(int arr[], int end, int curNode, long long &count_compari
     int leftNode = curNode * 2 + 1, rightNode = curNode * 2 + 2;
     int bigNode = curNode;
 
-    if (arr[leftNode] > arr[bigNode])
+    if (leftNode < end)
     {
         count_comparison++;
-        if (leftNode < end)
+        if (arr[leftNode] > arr[bigNode])
         {
             count_comparison++;
             bigNode = leftNode;
         }
     }
-    if (arr[rightNode] > arr[bigNode])
+    if (rightNode < end)
     {
         count_comparison++;
-        if (rightNode < end)
+        if (arr[rightNode] > arr[bigNode])
         {
             count_comparison++;
             bigNode = rightNode;
