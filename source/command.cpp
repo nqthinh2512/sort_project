@@ -17,18 +17,18 @@ sortFunction select_sort_func(char* sort_name) {
 		chosen_func = heapSort;
 	else if (string(sort_name) == "radix-sort")
 		chosen_func = radixSort;
-	else if (string(sort_name) == "bubble-sort");
-
-	else if (string(sort_name) == "shell-sort");
-
-	else if (string(sort_name) == "merge-sort");
-
-	else if (string(sort_name) == "counting-sort");
-
-	else if (string(sort_name) == "binary-insertion-sort");
-
-	else if (string(sort_name) == "flash-sort");
-
+	else if (string(sort_name) == "bubble-sort")
+		chosen_func = bubbleSort;
+	else if (string(sort_name) == "shell-sort")
+		chosen_func = shellSort;
+	else if (string(sort_name) == "merge-sort")
+		chosen_func = mergeSort;
+	else if (string(sort_name) == "counting-sort")
+		chosen_func = countingSort;
+	else if (string(sort_name) == "binary-insertion-sort")
+		chosen_func = binaryInsertionSort;
+	else if (string(sort_name) == "flash-sort")
+		chosen_func = flashSort;
 	return chosen_func;
 }
 
@@ -76,18 +76,18 @@ long long perform_count_comp(char* sort_name, int arr[], int n)
 		heapSort_count_cmp(arr, n, count_comp);
 	else if (string(sort_name) == "radix-sort")
 		radixSort_count_cmp(arr, n, count_comp);
-	else if (string(sort_name) == "bubble-sort");
-
-	else if (string(sort_name) == "shell-sort");
-
-	else if (string(sort_name) == "merge-sort");
-
-	else if (string(sort_name) == "counting-sort");
-
-	else if (string(sort_name) == "binary-insertion-sort");
-
-	else if (string(sort_name) == "flash-sort");
-
+	else if (string(sort_name) == "bubble-sort")
+		bubbleSort_count_cmp(arr, n, count_comp);
+	else if (string(sort_name) == "shell-sort")
+		shellSort_count_cmp(arr, n, count_comp);
+	else if (string(sort_name) == "merge-sort")
+		mergeSort_count_cmp(arr, n, 0, n - 1, count_comp);
+	else if (string(sort_name) == "counting-sort")
+		countingSort_count_cmp(arr, n, count_comp);
+	else if (string(sort_name) == "binary-insertion-sort")
+		binaryInsertionSort_count_cmp(arr, n, count_comp);
+	else if (string(sort_name) == "flash-sort")
+		flashSort_count_cmp(arr, n, count_comp);
 	return count_comp;
 }
 
@@ -238,7 +238,7 @@ void do_command_3(int n, char* requirements[])
 	for (int i = 0; i < m; i++)
 		fout << arr[i] << " ";
 	fout.close();
-	
+	  
 	call_generated_func(input_order_4, m, arr);
 	fout.open("output_4.txt", ios::out);
 	fout << m << endl;

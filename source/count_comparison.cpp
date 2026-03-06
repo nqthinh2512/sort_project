@@ -212,7 +212,7 @@ void radixSort_count_cmp(int arr[], int n, long long &count_comparison)
     }
 }
 //---------------------------------
-void countingsort_count(int a[], int n, int& count_comparison) {
+void countingSort_count_cmp(int a[], int n, long long& count_comparison) {
     int max_val = INT_MIN;
     for (int i = 0; i < n; i++) {
         ++count_comparison;
@@ -220,16 +220,16 @@ void countingsort_count(int a[], int n, int& count_comparison) {
             max_val = a[i];
         }
     }
-    int f[max_val];
+    int *f = new int[max_val + 1]();
     for (int i = 0; i < n; i++) {
         ++count_comparison;
         f[a[i]]++;
     }
-    for (int i = 1; i < max_val; i++) {
+    for (int i = 1; i <= max_val; i++) {
         ++count_comparison;
         f[i] = f[i - 1] + f[i];
     }
-    int b[n + 1];
+    int *b = new int[n + 1];
     for (int i = n - 1; i >= 0; i--) {
         ++count_comparison;
         b[f[a[i]] - 1] = a[i];
@@ -239,9 +239,10 @@ void countingsort_count(int a[], int n, int& count_comparison) {
         ++count_comparison;
         a[i] = b[i];
     }
-
+    delete[]f;
+    delete[]b;
 }
-void binaryinsertionsort_count(int a[], int n, int& count_comparison) {
+void binaryInsertionSort_count_cmp(int a[], int n, long long& count_comparison) {
     for (int i = 1; i < n; i++) {
         ++count_comparison;
         int key = a[i];
@@ -258,7 +259,7 @@ void binaryinsertionsort_count(int a[], int n, int& count_comparison) {
         a[fi] = key;
     }
 }
-void flashsort_count(int a[], int n, int& count_comparison) {
+void flashSort_count_cmp(int a[], int n, long long& count_comparison) {
     if (++count_comparison && n <= 1) return;
 
     int minVal = a[0], maxIdx = 0;
@@ -326,4 +327,64 @@ void flashsort_count(int a[], int n, int& count_comparison) {
 
         a[j + 1] = key;
     }
+}
+
+void bubbleSort_count_cmp(int* a, int n, long long& count_comparison)
+{
+    for (int i = 1; ++count_comparison && i < n; ++i)
+    {
+        for (int j = 0; ++count_comparison && j < n - i; ++j)
+            if (++count_comparison && a[j] > a[j + 1]) swap(a[j], a[j + 1]);
+    }
+}
+
+void shellSort_count_cmp(int* a, int n, long long& count_comparison)
+{
+    int interval = n / 2;
+    while (interval > 0)
+    {
+        for (int i = interval; ++count_comparison && i < n; ++i)
+        {
+            int temp = a[i];
+            int j = i;
+            while ((++count_comparison && j >= interval) && (++count_comparison && a[j - interval] > temp))
+            {
+                a[j] = a[j - interval];
+                j -= interval;
+            }
+            a[j] = temp;
+        }
+        interval /= 2;
+    }
+}
+
+void mergeSort_count_cmp(int* a, int n, int first, int last, long long& count_comparison)
+{
+    if (++count_comparison && first < last)
+    {
+        int mid = (first + last) / 2;
+        mergeSort_count_cmp(a, n, first, mid, count_comparison);
+        mergeSort_count_cmp(a, n, mid + 1, last, count_comparison);
+        merge_count_cmp(a, n, first, mid, last, count_comparison);
+    }
+}
+
+void merge_count_cmp(int* a, int n, int first, int mid, int last, long long& count_comparison)
+{
+    int first1 = first, last1 = mid;
+    int first2 = mid + 1, last2 = last;
+
+    int* temparr = new int[n];
+    int index = first1;
+    while ((++count_comparison && first1 <= last1) && (++count_comparison && first2 <= last2))
+    {
+        if (++count_comparison && a[first1] <= a[first2]) temparr[index++] = a[first1++];
+        else temparr[index++] = a[first2++];
+    }
+    while (++count_comparison && first1 <= last1) temparr[index++] = a[first1++];
+    while (++count_comparison && first2 <= last2) temparr[index++] = a[first2++];
+    for (int i = first; i <= last; ++i)
+        a[i] = temparr[i];
+    delete[] temparr;
+    temparr = NULL;
 }

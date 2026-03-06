@@ -15,6 +15,16 @@ void heapify_count_cmp(int arr[], int end, int curNode, long long &count_compari
 void heapSort_count_cmp(int arr[], int n, long long &count_comparison);
 
 void radixSort_count_cmp(int arr[], int n, long long &count_comparison);
-void countingsort_count(int a[], int n, int& count_comparison);
-void binaryinsertionsort_count(int a[], int n, int& count_comparison);
-void flashsort_count(int a[], int n, int& count_comparison);
+
+void countingSort_count_cmp(int a[], int n, long long& count_comparison);
+
+void binaryInsertionSort_count_cmp(int a[], int n, long long& count_comparison);
+
+void flashSort_count_cmp(int a[], int n, long long& count_comparison);
+
+void bubbleSort_count_cmp(int*, int, long long&);
+
+void shellSort_count_cmp(int*, int, long long&);
+
+void mergeSort_count_cmp(int*, int, int, int, long long&);
+void merge_count_cmp(int*, int, int, int, int, long long&);

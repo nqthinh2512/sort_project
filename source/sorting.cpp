@@ -169,21 +169,21 @@ void radixSort(int arr[], int n) {
     }
 }
 //---------------------------------------------
-void countingsort(int a[], int n) {
+void countingSort(int a[], int n) {
     int max_val = INT_MIN;
     for (int i = 0; i < n; i++) {
         if (a[i] > max_val) {
             max_val = a[i];
         }
     }
-    int f[max_val];
+    int *f = new int[max_val + 1]();
     for (int i = 0; i < n; i++) {
         f[a[i]]++;
     }
-    for (int i = 1; i < max_val; i++) {
+    for (int i = 1; i <=  max_val; i++) {
         f[i] = f[i - 1] + f[i];
     }
-    int b[n + 1];
+    int *b = new int[n + 1]();
     for (int i = n - 1; i >= 0; i--) {
         b[f[a[i]] - 1] = a[i];
         f[a[i]]--;
@@ -191,9 +191,10 @@ void countingsort(int a[], int n) {
     for (int i = 0; i < n; i++) {
         a[i] = b[i];
     }
-
+    delete[]f;
+    delete[]b;
 }
-void binaryinsertionsort(int a[], int n) {
+void binaryInsertionSort(int a[], int n) {
     for (int i = 1; i < n; i++) {
         int key = a[i];
         int fi = 0, las = i - 1;
@@ -222,7 +223,7 @@ void flashSort(int a[], int n) {
     int m = n / 2;
     if (m < 2) m = 2;
 
-    int* L = new int[m];
+    int* L = new int[m]();
     for (int i = 0; i < m; i++) L[i] = 0;
 
     for (int i = 0; i < n; i++) {
@@ -237,7 +238,7 @@ void flashSort(int a[], int n) {
 
     int move = 0, j = 0, k = m - 1;
     while (move < n - 1) {
-        while (j >= L[k]) {
+        while (j < n && j >= L[k]) {
             j++;
             k = (long long)(m - 1) * (a[j] - minVal) / (a[maxIdx] - minVal);
         }
@@ -261,4 +262,69 @@ void flashSort(int a[], int n) {
         }
         a[j + 1] = key;
     }
+}
+
+void bubbleSort(int* a, int n)
+{
+    for (int i = 1; i < n; ++i)
+    {
+        for (int j = 0; j < n - i; ++j)
+            if (a[j] > a[j + 1]) swap(a[j], a[j + 1]);
+    }
+}
+
+void shellSort(int* a, int n)
+{
+    int interval = n / 2;
+    while (interval > 0)
+    {
+        for (int i = interval; i < n; ++i)
+        {
+            int temp = a[i];
+            int j = i;
+            while (j >= interval && a[j - interval] > temp)
+            {
+                a[j] = a[j - interval];
+                j -= interval;
+            }
+            a[j] = temp;
+        }
+        interval /= 2;
+    }
+}
+
+void mergeSort(int* arr, int n)
+{
+    mergeSort(arr, n, 0, n - 1);
+}
+
+void mergeSort(int* a, int n, int first, int last)
+{
+    if (first < last)
+    {
+        int mid = (first + last) / 2;
+        mergeSort(a, n, first, mid);
+        mergeSort(a, n, mid + 1, last);
+        merge(a, n, first, mid, last);
+    }
+}
+
+void merge(int* a, int n, int first, int mid, int last)
+{
+    int first1 = first, last1 = mid;
+    int first2 = mid + 1, last2 = last;
+
+    int* temparr = new int[n];
+    int index = first1;
+    while ((first1 <= last1) && (first2 <= last2))
+    {
+        if (a[first1] <= a[first2]) temparr[index++] = a[first1++];
+        else temparr[index++] = a[first2++];
+    }
+    while (first1 <= last1) temparr[index++] = a[first1++];
+    while (first2 <= last2) temparr[index++] = a[first2++];
+    for (int i = first; i <= last; ++i)
+        a[i] = temparr[i];
+    delete[] temparr;
+    temparr = NULL;
 }

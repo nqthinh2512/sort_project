@@ -16,6 +16,16 @@ void heapSort(int arr[], int n);
 
 void radixSort(int arr[], int n);
 
-void countingsort(int a[], int n);
-void binaryinsertionsort(int a[], int n);
+void countingSort(int a[], int n);
+
+void binaryInsertionSort(int a[], int n);
+
 void flashSort(int a[], int n);
+
+void bubbleSort(int*, int);
+
+void shellSort(int*, int);
+
+void mergeSort(int* arr, int n);
+void mergeSort(int*, int, int, int);
+void merge(int*, int, int, int, int);
